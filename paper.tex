@@ -1,0 +1,115 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Header: Document Class, Packages, and New Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{sig-alternate}
+\usepackage{booktabs}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\newcommand{\urlwofont}[1]{\underline{\urlstyle{same}\url{#1}}}
+
+\newif\ifrev
+%  COMMENT OUT NEXT LINE TO HIDE TODOs AND COMMENTS
+\revtrue
+
+\ifrev
+  \newcommand{\yanyan}[1]{{\color{blue} [Yanyan: #1]}}
+  \newcommand{\cappos}[1]{{\color{red} [Justin: #1]}}
+  \newcommand{\linda}[1]{{\color{magenta} [Linda: #1]}}
+  \newcommand{\yiwen}[1]{{\color{OliveGreen} [Yiwen: #1]}}
+  \newcommand{\todo}[1]{{\color{Orange} [TODO: #1]}}
+\else
+  \newcommand{\yanyan}[1]{}
+  \newcommand{\cappos}[1]{}
+  \newcommand{\linda}[1]{}
+  \newcommand{\yiwen}[1]{}
+  \newcommand{\todo}[1]{}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Begin of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Title and Authors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Quantifying and Minimizing the Risk of Kernel Exploitation}
+
+\numberofauthors{5} 
+
+\author{
+% 1st. author
+\alignauthor
+Yiwen Li\\
+       \affaddr{New York University}\\
+       \email{liyiwen@nyu.edu}
+% 2nd. author
+\alignauthor
+Ali Gholami\\
+       \affaddr{KTH Royal Institute of Technology}\\
+       \email{gholami@kth.se}
+% 3rd. author
+\alignauthor 
+Christopher Matthews\\
+       \affaddr{Apple Inc.}\\
+       \email{chris4000@gmail.com}
+\and
+% 4th. author
+\alignauthor
+Yanyan Zhuang\\
+       \affaddr{University of British Columbia}\\
+       \email{yyzh@cs.ubc.ca}
+% 5th. author
+\alignauthor
+Justin Cappos\\
+       \affaddr{New York University}\\
+       \email{jcappos@nyu.edu}
+}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Categories, Subject Descriptors, General Terms, and Keywords
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\category{C.20}{General}{Security}
+\category{D.4.6}{Security and Protection}{Security kernels}
+
+\terms{Security, Measurement}
+
+\keywords{Kernel Protection, Vulnerabilities, Sandbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{introduction}
+\input{motivation}
+\input{metric}
+\input{design}
+\input{implementation}
+\input{evaluation}
+\input{related_work}
+\input{conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{abbrv}
+\bibliography{paper}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  End of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
