@@ -1,0 +1,21 @@
+\section{Conclusion}
+\label{sec.conclusion}
+
+Isolating untrusted user applications from the underlying kernel is desirable, in order to protect the privileged code and 
+avoid the exploitation of bugs. However, there has yet to be a standard method that can shed lights on how to effectively
+isolate the user space applications from the kernel space without losing desired functionality.
+
+We propose a new metric that quantitatively measures and evaluates the kernel code being executed when running
+user applications. The kernel trace profiling data obtained through our metric provides useful insights into different 
+features of the kernel and can be used to devise new designs that aims at specific requirements, such as providing 
+strong security to the system. 
+
+We implemented a sandbox system, called Lind, which is based upon new design using our metric. 
+Our system Lind, securely reconstruct complex yet essential OS functionality inside a dual-layer sandbox. 
+The sandbox itself is designed to have a minimized trusted computing base (TCB) and only interact with the kernel
+in a minimal and safe way. 
+
+Our evaluation results have shown that Lind is least likely to trigger historically reported kernel bugs, compared against
+other systems built without using our metric, such as VirtualBox and Graphene. The successful implementation of Lind
+suggests that new designs using our metric will lead to more secure systems. Moreover, Our metric is likely to encourage
+new designs that can create systems that suit their goals and requirements better. 
