@@ -1,0 +1,115 @@
+\section{A New Design for Building Secure Systems}
+\label{sec.design}
+
+In this section, we introduce a new design for building secure systems. More specifically, our goal is to 
+build secure systems that can mitigate the problem of kernel exploitation. As we have discussed in 
+the motivation section \S{2} before, one key reason that many previous work failed to prevent kernel exploitation
+effectively is that there is not enough knowledge about which portions of the kernel can be safely exposed
+to the user applications. And there is no standard method to acquire this knowledge. The metric we introduced
+in \S{3} is proposed to serve the purpose of having a standard method to obtain better understanding of the 
+kernel, and know which portions of the kernel can be safely exposed. We shall then use our new metric to 
+gain insights into the kernel and use those new insights to provide guidelines for our new design. 
+
+\subsection{Threat Model}
+The goal of our new design is to build secure systems that can effectively prevent the problem
+of kernel exploitation. We first discuss the threat model to our new design.
+
+In our threat model, threats refer to any behavior that may cause potential harm to the system, 
+which may be triggered by malicious code or bugs in non-malicious programs.
+
+In order to fully execute their functions, applications need to have access to a set of privileges provided by 
+the operating system, usually exposed as system calls. The primary security goal of a secure system is to 
+restrict a program to some subset of privileges, usually by exposing a set of functions that mediate 
+access to the underlying operating system privileges. Threats occur when applications obtain access to 
+privileges that were not intentionally exposed by the system, thus escaping the protection 
+intended by the secure system \cite{Repy:10}.
+
+To pose threats to a secure system, we assume that applications may use multiple threads to modify visible 
+state or issue concurrent requests which may trigger a race condition. Our goal is to prevent bugs in 
+the code from allowing an user program to escape the secure system to access the kernel code, and 
+possibly trigger kernel bugs.
+
+\subsection{Design Guidelines}
+Guidelines for new designs aiming at building secure systems are drawn from our metric. 
+More specifically, we construct our design guidelines from our metric by the following steps:
+
+\begin{enumerate}
+\item Decide which programs will the designed system support.
+\item Run those programs from 1) and use our metric to obtain kernel profiling data.
+\item Based on the kernel profiling data from 2), decide which portions of the kernel has been used.
+\item Check against kernel bug reports to decide which portions of the kernel can be safely exposed.
+\end{enumerate}
+
+Using the steps described above, we constructed the guidelines for our new design; 
+ 
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|}
+  \hline
+  Kernel Path & Safe to Expose? \\
+  \hline \hline
+  arch/x86/include/asm & yes \\
+  \hline
+  arch/x86/lib & yes \\
+  \hline
+  block & yes \\
+  \hline
+  kernel & yes \\
+  \hline
+  kernel/cpu & yes \\
+  \hline
+  kernel/gcov & yes \\
+  \hline
+  kernel/locking & no \\
+  \hline
+  kernel/sched & yes \\
+  \hline
+  net/unix & no \\
+  \hline
+\end{tabular}
+\caption {Design Guidelines}
+\label{table:design_guidelines}
+\end{table}
+
+\subsection{Design Choices}
+The design guidelines from last section is an useful indication of which portions of the kernel code can be
+safely exposed. When we create the design, we make specific design choices base on the guidelines.
+
+\begin{enumerate}
+\item Where to place the system: In the user space. 
+\item What is the proper interface: decide a list of system calls to support.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|}
+  \hline
+  System Call & How to Support? \\
+  \hline \hline
+  access & direct support \\
+  \hline
+  unlink & safely reimplement \\
+  \hline
+  open & safely reimplement \\
+  \hline
+  close & safely reimplement \\
+  \hline
+  read & safely reimplement \\
+  \hline
+  write & safely reimplement \\
+  \hline
+  lseek & safely reimplement \\
+  \hline
+  fstatfs& safely reimplement \\
+  \hline
+  socket & safely reimplement \\
+  \hline
+  bind & safely reimplement \\
+  \hline
+  fork & no support \\
+  \hline
+\end{tabular}
+\caption {Design Choices}
+\label{table:design_choices}
+\end{table}
+
+\end{enumerate}
